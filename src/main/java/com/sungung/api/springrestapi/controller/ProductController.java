@@ -17,6 +17,7 @@ public class ProductController extends Helper {
 	@GetMapping("/{code}")
 	public HttpEntity<Product> get(@PathVariable long code){
 		Product product = products.get(code);
+		product.removeLinks();
 		if (product != null){
 			product.add(ControllerLinkBuilder.linkTo(ProductController.class).slash(product.getCode()).withSelfRel());
 		}

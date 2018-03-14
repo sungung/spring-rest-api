@@ -18,6 +18,10 @@ public class DemoApplication {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 	
+	/**
+	 * Enable Swagger2 
+	 *
+	 */
 	@Configuration
 	@EnableSwagger2
 	public static class SwaggerConfig {

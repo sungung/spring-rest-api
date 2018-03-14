@@ -3,6 +3,7 @@ package com.sungung.api.springrestapi.controller;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,6 +31,14 @@ import com.sungung.api.springrestapi.entity.Customer;
  * Date: Wed, 28 Feb 2018 05:15:35 GMT
  * 
  * {"message":"Unsupported version"}
+ * 
+ * 
+ * Accepted media type
+ * $ curl -H "Accept: application/xml" http://localhost:8080/customers/1
+ * <?xml version="1.0" encoding="UTF-8" standalone="yes"?><customer><id>1</id><firstName>John</firstName><lastName>Smith</lastName><email>john@company.com</email></customer>
+ * 
+ * $ curl -H "Accept: application/json" http://localhost:8080/customers/1
+ * {"id":1,"firstName":"John","lastName":"Smith","email":"john@company.com"}
  * 
  * @author spark
  *
