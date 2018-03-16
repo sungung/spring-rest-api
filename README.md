@@ -104,7 +104,24 @@ Date: Wed, 14 Mar 2018 05:33:42 GMT
 
 ### Asynchronous operations
 * Return HTTP 202(Accepted) to indicate the request was accepted for processing but is not completed.
+```
+$ curl -i -X POST -H 'Content-Type: application/json' -d '{"code":4,"name":"Erase","origin":"China","price":10.0}' http://localhost:8080/products/a
+
+HTTP/1.1 202
+Location: http://localhost:8080/queue/4
+Content-Length: 0
+Date: Fri, 16 Mar 2018 01:31:11 GMT
+```
+
 * Return HTTP 303(See Other) after the operation completes. Location header gives the URI of the new resource.
+```
+$ curl -i http://localhost:8080/queue/4
+
+HTTP/1.1 303
+Location: http://localhost:8080/products/4
+Content-Length: 0
+Date: Fri, 16 Mar 2018 01:28:35 GMT
+```
 
 ### Pagination
 
