@@ -174,6 +174,35 @@ ETag header - tip) for security reasons, not allow sensitive data
 
 ### Maintaining response, scalability and availability
 
+### Running in docker
+* Create Dockerfile to specify the layers of an image
+* Build a docker image with maven
+```
+	<properties>
+		<docker.image.prefix>sungung</docker.image.prefix>
+	</properties>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.3.6</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+```
+* Run 'mvn clean install dockerfile:build'
+* Run image 'docker run -p 8080:8080 -t sungung/spring-rest-api'
 
 
 
