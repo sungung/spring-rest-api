@@ -1,7 +1,21 @@
 package com.sungung.api.springrestapi.controller;
 
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.support.PagedListHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.PagedResources.PageMetadata;
+import org.springframework.hateoas.Resource;
+import org.springframework.hateoas.Resources;
 import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -78,6 +92,8 @@ Date: Fri, 16 Mar 2018 01:28:35 GMT
 @RequestMapping("/products")
 public class ProductController extends Helper {
 	
+	private final static Logger log = LoggerFactory.getLogger(ProductController.class);
+	
 	@GetMapping("/{code}")
 	public HttpEntity<Product> get(@PathVariable long code){
 		Product product = products.get(code);
@@ -88,7 +104,7 @@ public class ProductController extends Helper {
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}
 	
-	@PostMapping("/")
+	@PostMapping
 	public HttpEntity<Product> create(@RequestBody Product newProduct) throws URISyntaxException{
 		products.put((long) 4,  newProduct);
 		HttpHeaders headers = new HttpHeaders();
@@ -100,6 +116,25 @@ public class ProductController extends Helper {
 	public HttpEntity asyncCreate(@RequestBody Product newProduct) throws URISyntaxException{
 		products.put((long) 4,  newProduct);
 		return ResponseEntity.accepted().location(ControllerLinkBuilder.linkTo(QueueController.class).slash(newProduct.getCode()).toUri()).build();
+	}
+	
+	@GetMapping
+	public HttpEntity<PagedResources> getAll(Pageable pageable, PagedResourcesAssembler<Product> assembler){
+		List<Product> products = new ArrayList<Product>();
+		for (int i = 0; i < 100; i++){
+			products.add(new Product(i, "prod"+i, "name"+i, i*10));
+		}
+		// Slice list through PagedListHolder
+		// Actually list slice should be made 
+		// by database query with Spring Data
+		PagedListHolder holder = new PagedListHolder();
+		holder.setSource(products);
+		holder.setPage(pageable.getPageNumber());
+		holder.setPageSize(pageable.getPageSize());
+		log.debug(pageable.toString());
+		
+		Page<Product> page = new PageImpl(holder.getPageList(), pageable, 100);		
+		return new ResponseEntity<PagedResources>(assembler.toResource(page), HttpStatus.OK);		
 	}
 
 }

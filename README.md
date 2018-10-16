@@ -125,6 +125,18 @@ Date: Fri, 16 Mar 2018 01:28:35 GMT
 
 ### Pagination
 
+* Hypermedia support
+* Using a PagedResourcesAssembler
+```
+$ curl -i http://localhost:8080/products
+HTTP/1.1 200
+Content-Type: application/hal+json;charset=UTF-8
+Transfer-Encoding: chunked
+Date: Tue, 16 Oct 2018 01:08:31 GMT
+
+{"_embedded":{"productList":[{"code":0,"name":"prod0","origin":"name0","price":0.0},{"code":1,"name":"prod1","origin":"name1","price":10.0},{"code":2,"name":"prod2","origin":"name2","price":20.0},{"code":3,"name":"prod3","origin":"name3","price":30.0},{"code":4,"name":"prod4","origin":"name4","price":40.0},{"code":5,"name":"prod5","origin":"name5","price":50.0},{"code":6,"name":"prod6","origin":"name6","price":60.0},{"code":7,"name":"prod7","origin":"name7","price":70.0},{"code":8,"name":"prod8","origin":"name8","price":80.0},{"code":9,"name":"prod9","origin":"name9","price":90.0},{"code":10,"name":"prod10","origin":"name10","price":100.0},{"code":11,"name":"prod11","origin":"name11","price":110.0},{"code":12,"name":"prod12","origin":"name12","price":120.0},{"code":13,"name":"prod13","origin":"name13","price":130.0},{"code":14,"name":"prod14","origin":"name14","price":140.0},{"code":15,"name":"prod15","origin":"name15","price":150.0},{"code":16,"name":"prod16","origin":"name16","price":160.0},{"code":17,"name":"prod17","origin":"name17","price":170.0},{"code":18,"name":"prod18","origin":"name18","price":180.0},{"code":19,"name":"prod19","origin":"name19","price":190.0}]},"_links":{"first":{"href":"http://localhost:8080/products?page=0&size=20"},"self":{"href":"http://localhost:8080/products?page=0&size=20"},"next":{"href":"http://localhost:8080/products?page=1&size=20"},"last":{"href":"http://localhost:8080/products?page=4&size=20"}},"page":{"size":20,"totalElements":100,"totalPages":5,"number":0}}
+```
+
 ### Partial responses for large binary resources
 * Implement HTTP HEAD request for these resource to expose the size of resource.
 * Client request will include Range header to fetch the resource, and server will return a partial response by returning HTTP 206 code.

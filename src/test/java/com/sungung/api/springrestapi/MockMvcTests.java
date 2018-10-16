@@ -1,7 +1,5 @@
 package com.sungung.api.springrestapi;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

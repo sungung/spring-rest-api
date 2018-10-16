@@ -17,6 +17,8 @@ public class Helper {
 		put(1l, new Product(1l, "Notepad", "China", 10.0));
 		put(2l, new Product(2l, "Pen", "Australia", 20.0));
 		put(3l, new Product(3l, "Pencil", "Japan", 30.0));
+		put(3l, new Product(4l, "Paper", "Korea", 40.0));
+		put(3l, new Product(5l, "Eraser", "Hongkong", 50.0));
 	}};	
 	
 	protected static enum Version { v1, v2 };
